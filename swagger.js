@@ -1,0 +1,19 @@
+const swaggerAutogen = require("swagger-autogen")();
+
+const doc = {
+  info: {
+    title: "Buses Database API",
+    description: "This is an API to execute CRUD requests",
+  },
+  host: "cse341-webserver.onrender.com",
+  schemes: ["https"],
+};
+
+const outputFile = "swagger.json";
+const endpointsFiles = ["graphql-schema/busResolvers.js","graphql-schema/customerResolvers.js"];
+
+/* NOTE: if you use the express Router, you must pass in the 
+   'endpointsFiles' only the root file where the route starts,
+   such as index.js, app.js, routes.js, ... */
+
+swaggerAutogen(outputFile, endpointsFiles, doc);
