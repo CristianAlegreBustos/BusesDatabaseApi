@@ -1,9 +1,8 @@
-"use strict";
 /***escribir la definición de los tipos y consultas que tu API GraphQL va a soportar.
    * Esto es hecho en el lenguaje de esquema de GraphQL, y permite describir los datos
    *  y la estructura de tus consultas. ***/
-const { gql } = require("apollo-server");
-module.exports = gql `
+import { gql } from 'apollo-server-express';
+export const typeDefs = gql `
   type Customer {
     _id: ID!
     name: String!

@@ -1,10 +1,10 @@
+
 /***escribir la definición de los tipos y consultas que tu API GraphQL va a soportar. 
    * Esto es hecho en el lenguaje de esquema de GraphQL, y permite describir los datos
    *  y la estructura de tus consultas. ***/
+import { gql } from 'apollo-server-express';
 
-const { gql } = require("apollo-server");
-
-module.exports = gql`
+export const typeDefs = gql`
   type Customer {
     _id: ID!
     name: String!
@@ -54,3 +54,5 @@ module.exports = gql`
     deleteBus(id: ID!): Bus!
   }
 `;
+
+

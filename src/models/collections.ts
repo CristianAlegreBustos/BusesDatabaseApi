@@ -1,5 +1,5 @@
 //Refleja la estructura de datos de la base de datos.
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const customerSchema = new mongoose.Schema({
   name: {
@@ -43,9 +43,7 @@ const busSchema = new mongoose.Schema({
     required: true,
   },
 });
+export const Customer = mongoose.model("Customer", customerSchema);
+export const Bus = mongoose.model("Bus", busSchema);
 
-module.exports = {
-  Customer: mongoose.model("Customer", customerSchema),
-  Bus: mongoose.model("Bus", busSchema),
-};
 

@@ -1,6 +1,6 @@
-import { BusesInput } from './../types';
-const { Bus } = require("../models/collections");
-const busResolvers = {
+import { BusesInput } from '../types';
+import { Bus } from '../models/collections.js';
+export const busResolvers = {
   Query: {
     buses: async () => {
       return await Bus.find();
@@ -21,5 +21,3 @@ const busResolvers = {
     },
   },
 };
-
-module.exports = busResolvers;

@@ -1,6 +1,6 @@
-const { Customer } = require("../models/collections");
-import { CustomersInput } from './../types';
-const customerResolvers = {
+import { Customer } from '../models/collections.js';
+import { CustomersInput } from '../types';
+export const customerResolvers = {
   Query: {
     customers: async () => {
       return await Customer.find();
@@ -21,5 +21,3 @@ const customerResolvers = {
     },
   },
 };
-
-module.exports = customerResolvers;
