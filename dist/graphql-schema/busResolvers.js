@@ -1,22 +1,26 @@
-import { Bus } from '../models/collections.js';
+import { Bus } from "../models/collections.js";
 export const busResolvers = {
     Query: {
-        buses: async () => {
-            return await Bus.find();
+        getAllBuses: async () => {
+            const Buses = await Bus.find();
+            return Buses;
         },
-        bus: async (_, { id }) => {
-            return await Bus.findById(id);
+        getBusesbyId: async (_, args) => {
+            const individual_Bus = await Bus.findById(args.id);
+            return individual_Bus;
         },
     },
     Mutation: {
-        createBus: async (_, { input }) => {
-            return await Bus.create(input);
+        createBus: async (_, { Total_Seat, Empty_Seat, Full_Seat, Patent }) => {
+            const bus = new Bus({ Total_Seat, Empty_Seat, Full_Seat, Patent });
+            return await bus.save();
         },
-        updateBus: async (_, { id, input }) => {
-            return await Bus.findByIdAndUpdate(id, input, { new: true });
+        updateBus: async (_, { id, Total_Seat, Empty_Seat, Full_Seat, Patent }) => {
+            return await Bus.findByIdAndUpdate(id, { $set: { Total_Seat, Empty_Seat, Full_Seat, Patent } }, { new: true });
         },
-        deleteBus: async (_, { id }) => {
-            return await Bus.findByIdAndDelete(id);
+        deleteBus: async (_, args) => {
+            const BusDeleted = await Bus.findByIdAndDelete(args.id);
+            return `Bus deleted succesfully : ${BusDeleted}`;
         },
     },
 };

@@ -3,7 +3,6 @@ export type CustomersInput = {
     email: string,
     phone: string,
     seat: number,
-    Bus_ID: string
   }
 
 export type BusesInput={

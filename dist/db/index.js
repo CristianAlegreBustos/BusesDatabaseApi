@@ -1,24 +1,14 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 const uri = process.env.MONGO_URI;
-let _db;
-export const mongoConnect = (callback) => {
-    MongoClient.connect(uri)
-        .then((client) => {
-        console.log("Connected!");
-        _db = client.db();
-        callback();
-    })
-        .catch((err) => {
-        console.log(err);
-        throw err;
-    });
-};
-export const getDb = () => {
-    if (_db) {
-        console.log(_db);
-        return _db;
+export const mongoConnect = async () => {
+    console.log("mongoDb Connected");
+    try {
+        mongoose.set('strictQuery', false);
+        await mongoose.connect(uri);
     }
-    throw "No database found!";
+    catch (error) {
+        console.log(error);
+    }
 };

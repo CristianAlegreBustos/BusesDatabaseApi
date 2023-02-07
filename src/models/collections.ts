@@ -1,7 +1,7 @@
 //Refleja la estructura de datos de la base de datos.
-import mongoose from "mongoose";
+import {Schema,model,Types}from "mongoose";
 
-const customerSchema = new mongoose.Schema({
+const customerSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -17,15 +17,10 @@ const customerSchema = new mongoose.Schema({
   seat: {
     type: Number,
     required: true,
-  },
-  Bus_ID: {
-    type: mongoose.Types.ObjectId,
-    ref: "Bus",
-    required: true,
-  },
+  }
 });
 
-const busSchema = new mongoose.Schema({
+const busSchema = new Schema({
   Total_Seat: {
     type: Number,
     required: true,
@@ -43,7 +38,7 @@ const busSchema = new mongoose.Schema({
     required: true,
   },
 });
-export const Customer = mongoose.model("Customer", customerSchema);
-export const Bus = mongoose.model("Bus", busSchema);
+export const Customer = model("Customer", customerSchema);
+export const Bus = model("Bus", busSchema);
 
 

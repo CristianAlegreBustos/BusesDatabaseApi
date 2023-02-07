@@ -7,16 +7,19 @@ import { typeDefs } from "./graphql-schema/typeDefs.js";
 import { customerResolvers } from "./graphql-schema/customerResolvers.js";
 const app = express();
 const port = 4000;
-const server = new ApolloServer({
-    typeDefs,
-    resolvers: [busResolvers, customerResolvers],
-    cache: new InMemoryLRUCache(),
-});
-mongoConnect(() => {
-    server.start().then(() => {
-        server.applyMiddleware({ app });
-        app.listen({ port }, () => {
-            console.log(`GraphQL Server running at http://localhost:${port}${server.graphqlPath}`);
-        });
+mongoConnect();
+app.get('/', (req, res) => res.send("Si somos tercos como mulas"));
+async function start() {
+    const server = new ApolloServer({
+        typeDefs: typeDefs,
+        resolvers: [busResolvers, customerResolvers],
+        cache: new InMemoryLRUCache(),
     });
-});
+    await server.start();
+    server.applyMiddleware({ app });
+    app.get('*', (req, res) => res.send("404 not found"));
+    app.listen({ port }, () => {
+        console.log(`GraphQL Server running at http://localhost:${port}${server.graphqlPath}`);
+    });
+}
+start();
