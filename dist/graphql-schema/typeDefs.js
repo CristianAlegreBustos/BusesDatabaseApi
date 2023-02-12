@@ -28,10 +28,10 @@ export const typeDefs = gql `
 
   type Mutation {
     createCustomer(
-      name: String
-      email: String
-      phone: String
-      seat: Int
+      name: String!
+      email: String!
+      phone: String!
+      seat: Int!
     ): Customer!
     updateCustomer(
       id: ID!
@@ -42,10 +42,10 @@ export const typeDefs = gql `
     ): Customer!
     deleteCustomer(id: ID!): String!
     createBus(
-      Total_Seat: Int
-      Empty_Seat: Int
-      Full_Seat: Int
-      Patent: String
+      Total_Seat: Int!
+      Empty_Seat: Int!
+      Full_Seat: Int!
+      Patent: String!
     ): Bus!
     updateBus(
       id: ID!
