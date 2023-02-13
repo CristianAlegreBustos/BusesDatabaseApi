@@ -5,7 +5,6 @@ import { busResolvers } from "./graphql-schema/busResolvers.js";
 import { typeDefs } from "./graphql-schema/typeDefs.js";
 import { customerResolvers } from "./graphql-schema/customerResolvers.js";
 import { serverErrorHandler } from './utils/ErrorHandling/typesErrors/serverErrorHandler.js';
-import swaggerUi from 'swagger-ui-express';
 const app = express();
 const port = 4000;
 mongoConnect();
@@ -16,16 +15,16 @@ app.use(function (req, res, next) {
     next();
 });
 app.get('/', (req, res) => res.send("Si somos tercos como mulas"));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, {
-    swaggerUrl: 'http://localhost:4000/swagger.json'
-}));
-//app.get('/api-docs',(req,res)=>res.redirect(`https://studio.apollographql.com/sandbox?endpoint=http%3A%2F%2Flocalhost%3A4000%2Fgraphql`))
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, {
+//   swaggerUrl: 'http://localhost:4000/swagger.json'
+// }));
+app.get('/api-docs', (req, res) => res.redirect(`https://studio.apollographql.com/sandbox?endpoint=http%3A%2F%2Flocalhost%3A4000%2Fgraphql`));
 app.get('/api-docs-render', (req, res) => res.redirect(`https://studio.apollographql.com/sandbox?endpoint=https%3A%2F%2Fbusesdatabaseapi.onrender.com%2Fgraphql`));
 async function start() {
     const server = new ApolloServer({
         typeDefs: typeDefs,
         resolvers: [busResolvers, customerResolvers],
-        introspection: true
+        introspection: true,
     });
     await server.start();
     server.applyMiddleware({ app });
