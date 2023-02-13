@@ -28,7 +28,7 @@ async function start() {
   const server = new ApolloServer({
     typeDefs : typeDefs,
     resolvers: [busResolvers, customerResolvers],
-    introspection: true
+      introspection: true,
   });
   await server.start();
   server.applyMiddleware({ app });
