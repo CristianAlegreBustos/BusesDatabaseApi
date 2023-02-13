@@ -5,7 +5,7 @@ import { busResolvers } from "./graphql-schema/busResolvers.js";
 import { typeDefs } from "./graphql-schema/typeDefs.js";
 import { customerResolvers } from "./graphql-schema/customerResolvers.js";
 import { serverErrorHandler } from './utils/ErrorHandling/typesErrors/serverErrorHandler.js';
-import swaggerUi from 'swagger-ui-express';
+
 
 
 const app = express();
@@ -28,7 +28,7 @@ async function start() {
   const server = new ApolloServer({
     typeDefs : typeDefs,
     resolvers: [busResolvers, customerResolvers],
-      introspection: true,
+      introspection: true
   });
   await server.start();
   server.applyMiddleware({ app });
