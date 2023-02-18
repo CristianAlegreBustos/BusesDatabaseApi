@@ -5,12 +5,24 @@ import { busResolvers } from "./graphql-schema/busResolvers.js";
 import { typeDefs } from "./graphql-schema/typeDefs.js";
 import { customerResolvers } from "./graphql-schema/customerResolvers.js";
 import { serverErrorHandler } from './utils/ErrorHandling/typesErrors/serverErrorHandler.js';
-
-
+import { authorizeWithGoogle, getGoogleAuthUrl } from './google-auth.js';
 
 const app = express();
 const port = 4000;
 mongoConnect()
+// Ruta de autenticación de Google
+app.get('/auth/google', (req, res) => {
+  const authUrl = getGoogleAuthUrl();
+  res.redirect(authUrl);
+});
+
+// Ruta de callback de autenticación de Google
+app.get('/auth/google/redirect', async (req, res) => {
+  const { code } = req.query;
+  const tokens = await authorizeWithGoogle(code);
+  // Almacena los tokens de acceso en una base de datos o en una cookie de sesión
+  res.redirect('/');
+});
 
 app.get('/',(req,res)=>res.send("Si somos tercos como mulas"))
 app.get('/api-docs',(req,res)=>res.redirect(`https://studio.apollographql.com/sandbox?endpoint=http%3A%2F%2Flocalhost%3A4000%2Fgraphql`))
