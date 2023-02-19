@@ -2,12 +2,12 @@ import { google } from 'googleapis';
 import path from 'path';
 import { readFileSync, writeFile } from 'fs';
 // Lee los datos de las credenciales de Google desde el archivo JSON
-const credentialsPath = path.join(process.cwd(), 'credentials.json');
+const credentialsPath = path.join(process.cwd(), process.env.NODE_ENV === "development" ? 'credentials.json' : "https://busesdatabaseapi.onrender.com/etc/secrets/<filename>");
 const credentials = JSON.parse(readFileSync(credentialsPath, 'utf8'));
-const REDIRECT_URI = 'http://localhost:4000/auth/google/redirect';
+const REDIRECT_URI = process.env.NODE_ENV === "development" ? 'http://localhost:4000/auth/google/redirect' : "https://busesdatabaseapi.onrender.com/auth/google/redirect";
 const SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
 // Configuración de OAuth 2.0
-const oAuth2Client = new google.auth.OAuth2(credentials.installed.client_id, credentials.installed.client_secret, REDIRECT_URI);
+const oAuth2Client = new google.auth.OAuth2(credentials.installed.client_id || process.env.CLIENT_ID, credentials.installed.client_secret || process.env.CLIENT_SECRET, REDIRECT_URI);
 // Función de autorización de Google
 export async function authorizeWithGoogle(code) {
     const { tokens } = await oAuth2Client.getToken(code.toString());
