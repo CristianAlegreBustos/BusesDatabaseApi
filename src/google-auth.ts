@@ -11,8 +11,8 @@ const SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
 
 // Configuración de OAuth 2.0
 const oAuth2Client = new google.auth.OAuth2(
-    credentials.installed.client_id || process.env.CLIENT_ID,
-    credentials.installed.client_secret || process.env.CLIENT_SECRET,
+    credentials.web.client_id,
+    credentials.web.client_secret,
     REDIRECT_URI
 );
 
