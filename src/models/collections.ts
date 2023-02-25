@@ -1,5 +1,5 @@
 //Refleja la estructura de datos de la base de datos.
-import {Schema,model,Types}from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 const customerSchema = new Schema({
   name: {
@@ -17,7 +17,7 @@ const customerSchema = new Schema({
   seat: {
     type: Number,
     required: true,
-  }
+  },
 });
 
 const busSchema = new Schema({
@@ -38,7 +38,12 @@ const busSchema = new Schema({
     required: true,
   },
 });
+
+const userSchema = new Schema({
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+});
+
 export const Customer = model("Customer", customerSchema);
 export const Bus = model("Bus", busSchema);
-
-
+export const User=model('User',userSchema);

@@ -2,17 +2,7 @@
  * Esto es hecho en el lenguaje de esquema de GraphQL, y permite describir los datos
  *  y la estructura de tus consultas. ***/
 import { gql } from "apollo-server-express";
-
-export const typeDefs = gql`
-type User {
-  id: ID!
-  email: String!
-  password: String!
-}
-input RegisterUserInput {
-  email: String!
-  password: String!
-}
+export const typeDefs = gql `
   type Customer {
     _id: ID
     name: String
@@ -37,7 +27,6 @@ input RegisterUserInput {
   }
 
   type Mutation {
-    registerUser(input: RegisterUserInput!): User!
     createCustomer(
       name: String!
       email: String!

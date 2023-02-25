@@ -12,7 +12,6 @@ export const busResolvers = {
       }catch(error){
         ErrorHandling(error)
       }
-     
     },
     getBusesbyId: async (_: void, args) => {
       try{
@@ -21,7 +20,6 @@ export const busResolvers = {
       }catch(error){
         ErrorHandling(error)
       }
-
     },
   },
   Mutation: {
@@ -51,7 +49,6 @@ export const busResolvers = {
       }catch(error){
         ErrorHandling(error)
       }
-      
     },
   },
 };
