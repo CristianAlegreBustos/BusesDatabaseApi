@@ -4,15 +4,22 @@
 import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
-type User {
-  id: ID!
-  email: String!
-  password: String!
-}
-input RegisterUserInput {
-  email: String!
-  password: String!
-}
+  type User {
+    _id: ID!
+    email: String!
+    password: String!
+  }
+  type UserGoogleAuth {
+    _id: ID!
+    email: String!
+    googleAccessToken: String!
+    googleRefreshToken: String!
+    googleScope: String!
+    googleTokenType: String!
+    googleIdToken: String!
+    googleExpiryDate: String
+  }
+
   type Customer {
     _id: ID
     name: String
@@ -34,10 +41,20 @@ input RegisterUserInput {
     getCustomerbyId(id: ID!): Customer
     getAllBuses: [Bus]!
     getBusesbyId(id: ID!): Bus
+    getUserbyEmail(email: String!): User
   }
 
   type Mutation {
-    registerUser(input: RegisterUserInput!): User!
+    registerUserGoogleAuth(
+      email: String!
+      googleAccessToken: String!
+      googleRefreshToken: String!
+      googleScope: String!
+      googleTokenType: String!
+      googleIdToken: String!
+      googleExpiryDate: String
+    ): UserGoogleAuth!
+    registerUser(email: String!, password: String!): User!
     createCustomer(
       name: String!
       email: String!

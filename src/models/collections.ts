@@ -44,6 +44,17 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
+const userSchemaGoogleAuth = new Schema({
+  email: { type: String, required: true },
+  googleAccessToken: { type: String },
+  googleRefreshToken: { type: String },
+  googleScope: { type: String },
+  googleTokenType: { type: String },
+  googleIdToken: { type: String },
+  googleExpiryDate: { type: String },
+});
+
+export const UserGoogleAuth = model("usergoogleauths", userSchemaGoogleAuth);
 export const Customer = model("Customer", customerSchema);
 export const Bus = model("Bus", busSchema);
-export const User=model('User',userSchema);
+export const User = model("users", userSchema);

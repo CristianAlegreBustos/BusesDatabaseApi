@@ -12,14 +12,15 @@ export const GET_ALL_CUSTOMERS = gql`
   }
 `;
 export const REGISTER_USER = gql`
-  mutation RegisterUser($input: UserInput!) {
-    registerUser(input: $input) {
-      _id
-      username
+  mutation registerUser($email: String!, $password: String!) {
+    registerUser(email: $email, password: $password) {
       email
+      password
     }
   }
 `;
+
+
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql', // reemplaza con la URL de tu servidor GraphQL

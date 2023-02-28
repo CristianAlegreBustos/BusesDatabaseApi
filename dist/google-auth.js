@@ -12,9 +12,8 @@ const oAuth2Client = new google.auth.OAuth2(credentials.web.client_id, credentia
 export async function authorizeWithGoogle(code) {
     const { tokens } = await oAuth2Client.getToken(code.toString());
     oAuth2Client.setCredentials(tokens);
-    // Guarda los tokens de acceso
-    await saveCredentials(tokens);
     // Devuelve los tokens de acceso
+    console.log(tokens);
     return tokens;
 }
 // Ruta de autenticación de Google

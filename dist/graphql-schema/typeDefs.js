@@ -3,6 +3,22 @@
  *  y la estructura de tus consultas. ***/
 import { gql } from "apollo-server-express";
 export const typeDefs = gql `
+  type User {
+    _id: ID!
+    email: String!
+    password: String!
+  }
+  type UserGoogleAuth {
+    _id: ID!
+    email: String!
+    googleAccessToken: String!
+    googleRefreshToken: String!
+    googleScope: String!
+    googleTokenType: String!
+    googleIdToken: String!
+    googleExpiryDate: String
+  }
+
   type Customer {
     _id: ID
     name: String
@@ -24,9 +40,20 @@ export const typeDefs = gql `
     getCustomerbyId(id: ID!): Customer
     getAllBuses: [Bus]!
     getBusesbyId(id: ID!): Bus
+    getUserbyEmail(email: String!): User
   }
 
   type Mutation {
+    registerUserGoogleAuth(
+      email: String!
+      googleAccessToken: String!
+      googleRefreshToken: String!
+      googleScope: String!
+      googleTokenType: String!
+      googleIdToken: String!
+      googleExpiryDate: String
+    ): UserGoogleAuth!
+    registerUser(email: String!, password: String!): User!
     createCustomer(
       name: String!
       email: String!

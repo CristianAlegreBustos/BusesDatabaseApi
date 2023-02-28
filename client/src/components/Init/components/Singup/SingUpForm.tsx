@@ -3,61 +3,75 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../../../apolloClient";
 
-type SignupFormInputs = {
-  username: string;
-  password: string;
-  confirmPassword: string;
-};
-
 export const SignupForm = () => {
-  const [formData, setFormData] = useState<SignupFormInputs>({
-    username: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{
-    username?: string;
+    email?: string;
     password?: string;
     confirmPassword?: string;
     graphql?:string;
   }>({});
 
-  const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
+  const [registerUser, { loading, error }] = useMutation(REGISTER_USER, {
+    onError: (error: any) => {
+      setErrors({
+        graphql: error.message,
+      });
+    },
+  });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!formData.username) {
+    setErrors({});
+    const newFormData = {
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    };
+    if (!newFormData.email) {
       setErrors((prevState) => ({
         ...prevState,
-        username: "This field is required",
+        email: "This field is required",
       }));
     }
-    if (!formData.password) {
+    if (!newFormData.password) {
       setErrors((prevState) => ({
         ...prevState,
         password: "This field is required",
       }));
     }
-    if (formData.password !== formData.confirmPassword) {
+    if (newFormData.password !== newFormData.confirmPassword) {
       setErrors((prevState) => ({
         ...prevState,
         confirmPassword: "Passwords must match",
       }));
     }
-    registerUser({
-      variables: {
-        input: { email: formData.username, password: formData.password },
-      },
-    }).catch((error) => {
-      setErrors((prevState) => ({ ...prevState, graphql: error.message }));
-    });
-
-    console.log(formData);
+    if (Object.keys(errors).length === 0) {
+      registerUser({
+        variables: {
+          email: email,
+          password: password,
+        },
+      })
+        .then((result) => console.log(result))
+        .catch((error: Error) => {
+          setErrors((prevState) => ({ ...prevState, graphql: error.message }));
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -67,13 +81,13 @@ export const SignupForm = () => {
         <input
           className="input"
           type="text"
-          name="username"
-          placeholder="Email or Username"
-          value={formData.username}
+          name="email"
+          placeholder="Email or username"
+          value={email}
           onChange={handleInputChange}
         />
-        {errors.username && (
-          <span className="error-message">{errors.username}</span>
+        {errors.email && (
+          <span className="error-message">{errors.email}</span>
         )}
       </div>
       <div className="input-container">
@@ -83,7 +97,7 @@ export const SignupForm = () => {
           type="password"
           name="password"
           placeholder="Password"
-          value={formData.password}
+          value={password}
           onChange={handleInputChange}
         />
         {errors.password && (
@@ -97,7 +111,7 @@ export const SignupForm = () => {
           type="password"
           name="confirmPassword"
           placeholder="Confirm Password"
-          value={formData.confirmPassword}
+          value={confirmPassword}
           onChange={handleInputChange}
         />
         {errors.confirmPassword && (
@@ -109,6 +123,7 @@ export const SignupForm = () => {
       </button>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
+      {errors.graphql && <p>Error: {errors.graphql}</p>}
     </form>
   );
 };

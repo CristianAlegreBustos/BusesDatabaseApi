@@ -1,6 +1,6 @@
 export function OAuth() {
   const handleLoginWithGoogle = () => {
-    window.location.href = 'http://localhost:3000/auth/google';
+    window.location.href = 'http://localhost:4000/auth/google';
   };
   const handleLoginWithMicrosoft = () => {
     window.location.href = 'http://localhost:3000/auth/google';
