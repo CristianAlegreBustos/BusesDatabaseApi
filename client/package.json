@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "homepage": "https://cristianalegrebustos.github.io/BusesDatabaseApi",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.9",

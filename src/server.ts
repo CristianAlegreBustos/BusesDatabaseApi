@@ -68,6 +68,10 @@ async function start() {
   await server.start();
   server.applyMiddleware({ app });
   app.use(serverErrorHandler);
+  app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://tu-usuario-de-github.github.io");
+    next();
+  });
   app.get('*',(req,res)=>res.send("404 not found"))
   app.listen({ port }, () => {
     console.log(
